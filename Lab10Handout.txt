@@ -1,0 +1,29 @@
+STUDENT HANDOUT: Perfect Maze Generation Using Kruskal’s Algorithm
+
+Lab: Perfect Maze Generation Using Kruskal’s Algorithm
+
+Overview
+In this lab, you will generate a perfect maze — a maze with exactly one simple path between any two cells — by computing a minimum spanning tree (MST) of a grid graph using Kruskal’s Algorithm.
+
+This lab emphasizes algorithmic reasoning:
+- Modeling a 2D grid as a graph
+- Generating weighted edges
+- Using union–find to detect cycles
+- Running Kruskal’s MST algorithm
+- Converting the MST into a maze
+
+Example 5×5 Maze:
+###########
+#.#...#.#.#
+#.#.###.#.#
+#.........#
+#.#.###.###
+#.#.#...#.#
+#.###.#.#.#
+#...#.#.#.#
+#####.#.#.#
+#.....#...#
+###########
+
+Example valid path (top-left to bottom-right, using only up/down/left/right):
+Down, Right, Right, Right, Right, Down, Down, Down, Right, Right

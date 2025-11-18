@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Configure",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "-S",
+        ".",
+        "-B",
+        "build"
+      ],
+      "group": "build"
+    },
+    {
+      "label": "Build maze_student",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "--build",
+        "build",
+        "--target",
+        "maze_student"
+      ],
+      "group": "build",
+      "dependsOn": "Configure"
+    }
+  ]
+}
