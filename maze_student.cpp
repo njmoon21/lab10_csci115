@@ -23,23 +23,30 @@ vector<int> rankUF;
 // TODO: Implement Find(x)
 int Find(int x) {
     // TODO
-    return 0;
+    if (parentUF[x] == 0) return x; // At root
+    parentUF[x] = Find(parentUF[x]);
+    return parentUF[x];
 }
 
 // TODO: Implement Union(a, b)
 void Union(int a, int b) {
     // TODO
+    parentUF[a] = parentUF[b];
 }
 
 // TODO: Build the list of edges for an R x C grid
 void buildEdges(int R, int C, vector<Edge>& edges) {
     // TODO
+
+
 }
 
 // TODO: Run Kruskal’s algorithm and fill 'used'
 void runKruskal(int R, int C, vector<Edge>& edges,
                 unordered_set<long long>& used) {
     // TODO
+
+
 }
 
 // Provided ASCII printing (students do NOT modify this)
