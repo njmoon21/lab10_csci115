@@ -82,12 +82,18 @@ void buildEdges(int R, int C, vector<Edge>& edges) {
 
 // TODO: Run Kruskal’s algorithm and fill 'used'
 void runKruskal(int R, int C, vector<Edge>& edges, unordered_set<long long>& used) {
-    // TODO
-    // THIS IS PASTED, I NEED TO FIND OUT HOW TO MAKE MY OWN SORTING ALGORITHM *********************************************************************************************************************
+    // I tried using the built-in vector sort() function, however it didn't work. Using insertion sort
     // 1. Sort edges by weight
-    sort(edges.begin(), edges.end(), [](const Edge &e1, const Edge &e2){
-        return e1.weight < e2.weight;
-    });
+    for (int i = 1; i < edges.size(); i++) {
+        Edge keyEdge = edges[i];
+        int j = i - 1;
+
+        while (j >= 0 && edges[j].weight > keyEdge.weight) {
+            edges[j + 1] = edges[j];
+            j--;
+        }
+        edges[j + 1] = keyEdge;
+    }
 
     // 2. Iterate through each edge after it has been sorted
     for (auto edge : edges) {
