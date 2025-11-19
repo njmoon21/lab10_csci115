@@ -21,32 +21,86 @@ vector<int> parentUF;
 vector<int> rankUF;
 
 // TODO: Implement Find(x)
-int Find(int x) {
-    // TODO
-    if (parentUF[x] == 0) return x; // At root
-    parentUF[x] = Find(parentUF[x]);
+int Find(const int x) {
+    if (parentUF[x] != x) // If it's not pointing to itself, then it means that it's not the root
+            parentUF[x] = Find(parentUF[x]); // Recursing up the tree, we'll eventually get to the root
+
     return parentUF[x];
 }
 
 // TODO: Implement Union(a, b)
 void Union(int a, int b) {
-    // TODO
-    parentUF[a] = parentUF[b];
+    int findA = Find(a);
+    int findB = Find(b);
+
+    // If the rank of a node is smaller than another node's rank, then add smaller node under bigger ranked node
+    if (rankUF[findA] < rankUF[findB])
+        parentUF[findA] = findB;
+    else if (rankUF[findA] > rankUF[findB])
+        parentUF[findB] = findA;
+    else {
+        parentUF[findB] = findA;
+        rankUF[findA]++;
+    }
 }
 
 // TODO: Build the list of edges for an R x C grid
 void buildEdges(int R, int C, vector<Edge>& edges) {
-    // TODO
+    /* Notes:
+     * Each cell has up to 2 edges:
+     * - Right neighbor (r, c+1)
+     * - Down neighbor (r+1, c)
+     */
 
 
+    for (int row = 0; row < R; row++) { // Going to iterate through each row
+        for (int column = 0; column < C; column++) { // Then iterating through each column per row
+            int id = row * C + column; //
+
+            // Keep adding neighbors until we reach the end/wall of the maze
+            // This section adds the right neighbors
+            if (column + 1 < C) { // If we aren't out of bounds, add a neighbor ; otherwise don't add edge
+                Edge newEdge;
+                newEdge.a = id;
+                newEdge.b = id + 1; // The right neighbor is the next cell in the 2D grid
+                newEdge.weight = rand();
+                edges.push_back(newEdge);
+            }
+
+            // This section adds the bottom neighbors
+            if (row + 1 < R) { // If we aren't out of bounds, add a neighbor ; otherwise don't add edge
+                Edge newEdge;
+                newEdge.a = id;
+                // Was confused why 'id + C' would make it traverse down by one row, but I think if it like it wraps around to the next row
+                newEdge.b = id + C; // The bottom neighbor is going DOWN the column
+                newEdge.weight = rand();
+                edges.push_back(newEdge);
+            }
+        }
+    }
 }
 
 // TODO: Run Kruskal’s algorithm and fill 'used'
-void runKruskal(int R, int C, vector<Edge>& edges,
-                unordered_set<long long>& used) {
+void runKruskal(int R, int C, vector<Edge>& edges, unordered_set<long long>& used) {
     // TODO
+    // THIS IS PASTED, I NEED TO FIND OUT HOW TO MAKE MY OWN SORTING ALGORITHM *********************************************************************************************************************
+    // 1. Sort edges by weight
+    sort(edges.begin(), edges.end(), [](const Edge &e1, const Edge &e2){
+        return e1.weight < e2.weight;
+    });
 
+    // 2. Iterate through each edge after it has been sorted
+    for (auto edge : edges) {
+        // 3.
+        if (Find(edge.a) != Find(edge.b)) {
+            used.insert(encodeEdge(edge.a, edge.b));
+            Union(edge.a, edge.b);
 
+            // 4. Stop when you have selected R*C - 1 edges
+            if (used.size() == R * C - 1)
+                break;
+        }
+    }
 }
 
 // Provided ASCII printing (students do NOT modify this)
